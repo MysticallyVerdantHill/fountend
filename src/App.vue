@@ -3,7 +3,9 @@
   <div class="myBody"><router-view></router-view></div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+//123
+</script>
 
 <style>
 .myBody {
