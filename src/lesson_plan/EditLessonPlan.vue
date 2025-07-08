@@ -1,116 +1,256 @@
 <template>
   <!-- 编辑教案和新建教案-->
   <div class="myCol" style="height: 100%; width: 100%">
-    <el-header class="myRow" style="
+    <el-header
+      class="myRow"
+      style="
         height: auto;
         margin: 0;
         padding: 0;
         width: 100%;
         margin-bottom: 20px;
-      ">
+      "
+    >
       <div class="myTitle" style="margin: 0">编辑教案</div>
       <div class="fill"></div>
       <div class="mySubTitle" style="margin: 0">{{ name }}</div>
     </el-header>
-    <el-main style="
+    <el-main
+      style="
         height: 100%;
         width: 100%;
         margin: 0;
         padding: 0;
         margin-bottom: 20px;
-      ">
+      "
+    >
       <div class="myRow" style="height: 100%; width: 100%">
         <div class="right">
-          <div class="mySubTitle">AI编辑</div>
-          <div class="myRow list" style="margin-left: 20px">
-            <div class="myText">学期</div>
-            <div class="w10"></div>
-            <el-select style="width: 200px" placeholder="选择学期" :disabled="isItemLocked" v-model="selectTerm"
-              @change="selectingTerm">
-              <el-option v-for="(t, index) in term" :key="index" :label="t" :value="t">
-              </el-option>
-            </el-select>
-          </div>
-          <div class="myRow list" style="margin-left: 20px">
-            <div class="myText">课程</div>
-            <div class="w10"></div>
-            <el-select style="width: 200px" placeholder="选择课程" v-model="selectCourse" @change="selectingCourse"
-              :disabled="isItemLocked">
-              <el-option v-for="(t, index) in course" :key="index" :label="t.name" :value="t.name"></el-option>
-            </el-select>
-          </div>
-          <div class="myRow list" style="margin-left: 20px">
-            <div class="myText">章节</div>
-            <div class="w10"></div>
-            <el-tree-select style="width: 200px" placeholder="选择章节" :data="para" v-model="selectParaIndex"
-              :disabled="isItemLocked" :render-after-expand="false" @change="selectingPara">
-            </el-tree-select>
-          </div>
-          <div class="myRow list" style="margin-left: 20px">
-            <div class="myText">目录结构</div>
-            <div class="w10"></div>
-            <el-input v-model="newContent" placeholder="输入新标题" style="width: 150px; padding: 5px" />
-            <div class="w10"></div>
-            <el-button @click="addContent" style="padding: 5px 10px">添加</el-button>
-          </div>
-          <div class="myRow list" style="
-              margin-left: 30px;
-              width: 100%;
-              display: flex;
-              flex-wrap: wrap;
-            ">
-            <el-tag v-for="(item, index) in content" :key="index" style="margin: 5px" closable
-              @close="removeContent(index)" size="large">
-              {{ item }}
-            </el-tag>
-          </div>
-          <div class="myRow">
-            <div class="myText" style="margin-left: 20px">提示词</div>
-            <div class="fill"></div>
-            <Icon class="onHover" icon="mdi:attachment" width="24" height="24" style="border-radius: 50px" />
-          </div>
-          <div class="h10"></div>
-          <div style="
-              padding-left: 20px;
-              height: 150px;
-              width: 100%;
-              box-sizing: border-box;
-            ">
-            <div style="
-                height: 100%;
+          <div v-if="id == -1" style="height: 100%; width: 100%">
+            <div class="mySubTitle">AI生成</div>
+            <div class="myRow list" style="margin-left: 20px">
+              <div class="myText">学期</div>
+              <div class="w10"></div>
+              <el-select
+                style="width: 200px"
+                placeholder="选择学期"
+                :disabled="isItemLocked"
+                v-model="selectTerm"
+                @change="selectingTerm"
+              >
+                <el-option
+                  v-for="(t, index) in term"
+                  :key="index"
+                  :label="t"
+                  :value="t"
+                >
+                </el-option>
+              </el-select>
+            </div>
+            <div class="myRow list" style="margin-left: 20px">
+              <div class="myText">课程</div>
+              <div class="w10"></div>
+              <el-select
+                style="width: 200px"
+                placeholder="选择课程"
+                v-model="selectCourse"
+                @change="selectingCourse"
+                :disabled="isItemLocked"
+              >
+                <el-option
+                  v-for="(t, index) in course"
+                  :key="index"
+                  :label="t.name"
+                  :value="t.name"
+                ></el-option>
+              </el-select>
+            </div>
+            <div class="myRow list" style="margin-left: 20px">
+              <div class="myText">章节</div>
+              <div class="w10"></div>
+              <el-tree-select
+                style="width: 200px"
+                :placeholder="dynamicPlaceholder"
+                :data="para"
+                v-model="selectParaIndex"
+                :disabled="isItemLocked"
+                :render-after-expand="false"
+                @change="selectingPara"
+              >
+              </el-tree-select>
+            </div>
+            <div class="myRow list" style="margin-left: 20px">
+              <div class="myText">目录结构</div>
+              <div class="w10"></div>
+              <el-input
+                v-model="newContent"
+                placeholder="输入新标题"
+                style="width: 150px; padding: 5px"
+              />
+              <div class="w10"></div>
+              <el-button @click="addContent" style="padding: 5px 10px"
+                >添加</el-button
+              >
+            </div>
+            <div
+              class="myRow list"
+              style="
+                margin-left: 30px;
                 width: 100%;
-                border-width: 1px;
-                border-radius: 5px;
-                border-color: #cccccc;
-                border-style: solid;
+                display: flex;
+                flex-wrap: wrap;
+              "
+            >
+              <el-tag
+                v-for="(item, index) in content"
+                :key="index"
+                style="margin: 5px"
+                closable
+                @close="removeContent(index)"
+                size="large"
+              >
+                {{ item }}
+              </el-tag>
+            </div>
+            <div class="myRow">
+              <div class="myText" style="margin-left: 20px">提示词</div>
+              <div class="fill"></div>
+              <Icon
+                class="onHover"
+                icon="mdi:attachment"
+                width="24"
+                height="24"
+                style="border-radius: 50px"
+              />
+            </div>
+            <div class="h10"></div>
+            <div
+              style="
+                padding-left: 20px;
+                height: 150px;
+                width: 100%;
                 box-sizing: border-box;
-                padding: 5px;
-              ">
-              <textarea placeholder="请输入提示词" style="
+              "
+            >
+              <div
+                style="
                   height: 100%;
                   width: 100%;
-                  border-width: 0;
-                  outline: 0;
-                  resize: none;
-                  border-radius: 10px;
-                  font-size: 15px;
-                " v-model="callWord"></textarea>
+                  border-width: 1px;
+                  border-radius: 5px;
+                  border-color: #cccccc;
+                  border-style: solid;
+                  box-sizing: border-box;
+                  padding: 5px;
+                "
+              >
+                <textarea
+                  placeholder="请输入提示词"
+                  style="
+                    height: 100%;
+                    width: 100%;
+                    border-width: 0;
+                    outline: 0;
+                    resize: none;
+                    border-radius: 10px;
+                    font-size: 15px;
+                  "
+                  v-model="callWord"
+                ></textarea>
+              </div>
+            </div>
+            <div class="h10"></div>
+            <div class="myRow">
+              <div class="fill"></div>
+              <div class="w5"></div>
+              <!-- 生成按钮 color="#626aef"-->
+              <el-button
+                @click="onCreateButton"
+                size="large"
+                type="primary"
+                style="
+                  font-size: 17px;
+                  background: linear-gradient(
+                    to bottom right,
+                    #19a3fa,
+                    #b11eb6
+                  );
+                "
+              >
+                <Icon icon="mdi:paper-airplane" width="24" height="24" />
+                <div class="w5"></div>
+                开始生成
+              </el-button>
+              <div class="fill"></div>
             </div>
           </div>
-          <div class="h10"></div>
-          <div class="myRow">
-            <div class="fill"></div>
-            <div class="w5"></div>
-            <!-- 生成按钮 color="#626aef"-->
-            <el-button @click="onCreateButton" size="large" type="primary" style="
-                font-size: 17px;
-                background: linear-gradient(to bottom right, #19a3fa, #b11eb6);
-              ">
-              <Icon icon="mdi:paper-airplane" width="24" height="24" />
-              <div class="w5"></div>
-              开始生成
-            </el-button>
-            <div class="fill"></div>
+          <div class="myCol" style="height: 100%; width: 100%" v-else>
+            <el-header style="margin: 0; padding: 0; width: 100%; height: auto"
+              ><div class="myRow">
+                <div class="fill"></div>
+                <div class="mySubTitle">AI编辑</div>
+                <div class="fill"></div>
+              </div>
+              <el-divider
+                style="margin-top: 10px; margin-bottom: 0"
+              ></el-divider
+            ></el-header>
+
+            <el-main class="myCol" style="width: 100%; margin: 0; padding: 0">
+              <el-scrollbar style="width: 100%"
+                ><div
+                  v-for="(t, index) in allCallWord"
+                  :key="index"
+                  style="
+                    height: auto;
+                    width: 100%;
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                  "
+                  class="myRow"
+                >
+                  <div class="w20"></div>
+                  <div class="fill" v-if="index % 2 == 0"></div>
+                  <div
+                    v-if="index % 2 == 0"
+                    style="
+                      height: auto;
+                      padding: 10px;
+                      border-radius: 10px;
+                      background-color: #19a3fa;
+                      width: auto;
+                      max-width: 70%;
+                    "
+                  >
+                    <div style="height: 100%; width: 100%; color: white">
+                      {{ t }}
+                    </div>
+                  </div>
+                  <div
+                    v-if="index % 2 == 1"
+                    style="
+                      height: auto;
+                      padding: 10px;
+                      border-radius: 10px;
+                      background-color: #e7e7e7;
+                      width: auto;
+                      max-width: 70%;
+                    "
+                  >
+                    <div style="height: 100%; width: 100%">
+                      {{ t }}
+                    </div>
+                  </div>
+                  <div class="fill" v-if="index % 2 == 1"></div>
+                  <div class="w20"></div></div
+              ></el-scrollbar>
+            </el-main>
+            <el-footer style="width: 100%; height: auto"
+              ><div
+                style="height: 100px; width: 100%; background-color: #b11eb6"
+                @click="onCreateButton"
+              ></div
+            ></el-footer>
           </div>
         </div>
         <div class="middle">
@@ -130,10 +270,9 @@
   </div>
 </template>
 <script setup lang="ts">
-
 import { Icon } from "@iconify/vue";
 declare const tinymce: any;
-import { onMounted, type Ref } from "vue";
+import { computed, onMounted, type Ref } from "vue";
 import { ref } from "vue";
 import {
   getAllTerm,
@@ -149,31 +288,33 @@ const route = useRoute();
 var isItemLocked: Ref<boolean> = ref(false);
 //全部数据
 var term: Ref<string[]> = ref([]);
-var course: Ref<{ id: number, name: string }[]> = ref([]);
+var course: Ref<{ id: number; name: string }[]> = ref([]);
 var para: Ref<Para> = ref([]);
+var allCallWord: Ref<string[]> = ref([]);
 //选择数据
 var selectTerm: Ref<string> = ref("");
 var selectCourse: Ref<string> = ref(""); //选择教案对应的课程
-var selectPara: string = ""
+var selectPara: string = "";
 var callWord: Ref<string> = ref(""); //输入提示词
-var text: Ref<string> = ref("");  //最终展示教案
+var text: Ref<string> = ref(""); //最终展示教案
 var index: number = -1;
 var iindex: number = -1;
-var name: Ref<string> = ref("未命名");  //教案名
-var courseId: number = 0  //这里实际上存储的是教案的id
+var name: Ref<string> = ref("未命名"); //教案名
+var courseId: number = 0; //这里实际上存储的是教案的id
+var id: Ref<number> = ref(-1);
 const content = ref(["标题一", "标题二", "标题三", "标题四"]);
 
-const newContent = ref("");  //临时存储用
+const newContent = ref(""); //临时存储用
 var selectParaIndex: Ref<string> = ref(""); //仅作为获取index使用
-  
+
 async function selectingCourse(): Promise<void> {
-  course.value.forEach(t => {
+  course.value.forEach((t) => {
     if (t.name == selectCourse.value) {
       courseId = t.id;
     }
   });
   para.value = await getParaByCourse(selectTerm.value, courseId);
-  console.log(para.value)
+  console.log(para.value);
 }
 function selectingPara(): void {
   var temp = selectParaIndex.value.split("-");
@@ -187,7 +328,9 @@ async function selectingTerm(): Promise<void> {
   course.value = result;
 }
 async function onCreateButton() {
-  text.value = await createNewText(
+  allCallWord.value.push(callWord.value);
+  allCallWord.value.push("正在生成中...");
+  var result: { id: number; data: string } = await createNewText(
     name.value,
     selectTerm.value,
     courseId, //这里是课程id
@@ -198,20 +341,24 @@ async function onCreateButton() {
     text.value,
     content.value,
     selectCourse.value,
+    id.value,
+    Number(route.params.id)
   );
+  text.value = result.data;
   tinymce.get("111").setContent(text.value);
+  allCallWord.value[allCallWord.value.length - 1] = "生成已完成";
+  id.value = result.id;
 }
-
 
 function addContent(): void {
   if (newContent.value.trim()) {
     content.value.push(newContent.value);
     newContent.value = "";
   }
-};
+}
 function removeContent(index: number): void {
   content.value.splice(index, 1);
-};
+}
 
 onMounted(async () => {
   //初始化文本输入框
@@ -258,6 +405,10 @@ onMounted(async () => {
     isItemLocked.value = false;
     term.value = await getAllTerm();
   }
+});
+const dynamicPlaceholder = computed(() => {
+  if ((route.query.status as string) == "1") return route.query.para as string;
+  else return "选择章节";
 });
 </script>
 
