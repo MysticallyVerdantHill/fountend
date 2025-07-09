@@ -127,3 +127,12 @@
 .slide-leave-to {
   max-height: 0;
 }
+.stack-container {
+  position: relative;
+}
+
+.stack-container > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

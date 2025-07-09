@@ -60,111 +60,27 @@ export async function createNewText(
   return response.data as { id: number; data: string };
 }
 //获取所有的教案
-export function getAllLessonPlan(): LessonPlan[] {
-  return [
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-    {
-      id: "5-3",
-      name: "二维数组与数组的应用",
-      course: "程序设计基础 Ⅰ",
-      para: "数组",
-      time: "2025-12-22 20:20",
-    },
-  ];
+export async function getAllLessonPlan(userId: number): Promise<LessonPlan[]> {
+  var response = await axios.post(host + "/getAllLessonPlan", {
+    userId: userId,
+  });
+  var result: LessonPlan[] = response.data as LessonPlan[];
+  for (var i = 0; i < result.length; i++) {
+    var date = new Date(result[i]["time"]);
+    result[i]["time"] = `${date.getFullYear()}-${
+      date.getMonth() + 1
+    }-${date.getDate()} ${date.getHours().toString().padStart(2, "0")}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+  }
+  console.log(result);
+  return result;
 }
 
 export type LessonPlan = {
-  id: string;
+  id: number;
+  paraId: string;
   name: string;
   course: string;
   para: string;

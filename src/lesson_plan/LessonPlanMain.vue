@@ -1,18 +1,19 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { Icon } from "@iconify/vue";
 import { onMounted, ref, type Ref } from "vue";
 import { getAllLessonPlan, type LessonPlan } from "./LessonPlanService";
 const router = useRouter();
+const route = useRoute();
 function onClickNew() {
   const routeUrl = router.resolve({ name: "editLessonPlan" });
   window.open(routeUrl.href, "_blank");
 }
 var data: Ref<LessonPlan[]> = ref([]);
 
-onMounted(() => {
+onMounted(async () => {
   //初始化所有数据
-  data.value = getAllLessonPlan();
+  data.value = await getAllLessonPlan(Number(route.params.id));
 });
 </script>
 <template>
@@ -109,7 +110,7 @@ onMounted(() => {
           class="myRow list"
           style="width: 100%"
         >
-          <div class="myTextSecond" style="width: 10%">{{ item.id }}</div>
+          <div class="myTextSecond" style="width: 10%">{{ item.paraId }}</div>
           <div class="myTextSecond" style="width: 25%">{{ item.name }}</div>
           <div class="myTextSecond center" style="width: 15%">
             {{ item.course }}

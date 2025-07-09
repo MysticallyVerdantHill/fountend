@@ -26,6 +26,7 @@
     >
       <div class="myRow" style="height: 100%; width: 100%">
         <div class="right">
+          <!--第一次创建时的界面-->
           <div v-if="id == -1" style="height: 100%; width: 100%">
             <div class="mySubTitle">AI生成</div>
             <div class="myRow list" style="margin-left: 20px">
@@ -184,7 +185,7 @@
               <div class="fill"></div>
             </div>
           </div>
-          <div class="myCol" style="height: 100%; width: 100%" v-else>
+          <div v-else class="myCol" style="height: 100%; width: 100%">
             <el-header style="margin: 0; padding: 0; width: 100%; height: auto"
               ><div class="myRow">
                 <div class="fill"></div>
@@ -245,12 +246,145 @@
                   <div class="w20"></div></div
               ></el-scrollbar>
             </el-main>
-            <el-footer style="width: 100%; height: auto"
-              ><div
-                style="height: 100px; width: 100%; background-color: #b11eb6"
-                @click="onCreateButton"
-              ></div
-            ></el-footer>
+            <el-footer
+              style="width: 100%; height: 120px; margin: 0; padding: 0"
+            >
+              <div class="myRow" style="align-items: flex-end">
+                <div class="fill">
+                  <div
+                    style="
+                      height: 120px;
+                      width: 100%;
+                      box-sizing: border-box;
+                      padding-bottom: 20px;
+                    "
+                  >
+                    <div
+                      style="
+                        height: 100%;
+                        width: 100%;
+                        border-width: 1px;
+                        border-radius: 20px;
+                        border-color: #cccccc;
+                        border-style: solid;
+                        box-sizing: border-box;
+                        padding: 10px;
+                      "
+                    >
+                      <textarea
+                        placeholder="请输入提示词"
+                        style="
+                          height: 100%;
+                          width: 100%;
+                          border-width: 0;
+                          outline: 0;
+                          resize: none;
+                          border-radius: 10px;
+                          font-size: 15px;
+                        "
+                        v-model="callWord"
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  @click="onCreateButton"
+                  style="
+                    height: 40px;
+                    width: 40px;
+                    background-color: #19a3fa;
+                    border-radius: 50px;
+                    margin-bottom: 20px;
+                    margin-left: 5px;
+                  "
+                >
+                  <div class="myCol" style="height: 100%; width: 100%">
+                    <div class="fill"></div>
+                    <div class="myRow" style="height: 24; width: 100%">
+                      <div class="fill"></div>
+                      <Icon
+                        icon="mdi:send"
+                        width="24"
+                        height="24"
+                        style="color: white"
+                      />
+                      <div class="fill"></div>
+                    </div>
+                    <div class="fill"></div>
+                  </div>
+                </div>
+              </div>
+              <!--<div class="stack-container" style="height: 100%; width: 100%">
+                <div
+                  style="
+                    height: 120px;
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding-bottom: 20px;
+                  "
+                >
+                  <div
+                    style="
+                      height: 100%;
+                      width: 100%;
+                      border-width: 1px;
+                      border-radius: 20px;
+                      border-color: #cccccc;
+                      border-style: solid;
+                      box-sizing: border-box;
+                      padding: 10px;
+                    "
+                  >
+                    <textarea
+                      placeholder="请输入提示词"
+                      style="
+                        height: 100%;
+                        width: 100%;
+                        border-width: 0;
+                        outline: 0;
+                        resize: none;
+                        border-radius: 10px;
+                        font-size: 15px;
+                      "
+                      v-model="callWord"
+                    ></textarea>
+                  </div>
+                </div>
+                <div class="myCol" style="height: 100%; width: 100%">
+                  <div class="fill" style="background-color: #b11eb6"></div>
+                  <div
+                    class="myRow"
+                    style="height: 40px; width: 100%; padding-bottom: 20px"
+                  >
+                    <div class="fill"></div>
+                    <div
+                      style="
+                        height: 40px;
+                        width: 40px;
+                        background-color: #19a3fa;
+                        border-radius: 50px;
+                      "
+                    >
+                      <div class="myCol" style="height: 100%; width: 100%">
+                        <div class="fill"></div>
+                        <div class="myRow" style="height: 24; width: 100%">
+                          <div class="fill"></div>
+                          <Icon
+                            icon="mdi:send"
+                            width="24"
+                            height="24"
+                            style="color: white"
+                          />
+                          <div class="fill"></div>
+                        </div>
+                        <div class="fill"></div>
+                      </div>
+                    </div>
+                    <div class="w10"></div>
+                  </div>
+                </div>
+              </div>-->
+            </el-footer>
           </div>
         </div>
         <div class="middle">
@@ -348,6 +482,7 @@ async function onCreateButton() {
   tinymce.get("111").setContent(text.value);
   allCallWord.value[allCallWord.value.length - 1] = "生成已完成";
   id.value = result.id;
+  callWord.value = "";
 }
 
 function addContent(): void {
