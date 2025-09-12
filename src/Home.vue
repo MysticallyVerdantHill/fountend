@@ -1,8 +1,8 @@
 <template>
   <!-- 顶部以及左侧导航栏-->
   <div class="myCol" style="height: 100%">
-    <el-header style="height: 70px; width: 100%; margin: 0; padding: 0"
-      ><div class="head myRow">
+    <div style="height: 8%; width: 100%; margin: 0; padding: 0">
+      <div class="head myRow">
         <div class="myRow" style="width: 200px">
           <div class="fill"></div>
           <div style="font-size: 30px; color: white">教学实训</div>
@@ -11,161 +11,81 @@
         <div class="myRow" style="flex-grow: 1">
           <div class="searchBox myRow">
             <div class="w10"></div>
-            <Icon
-              icon="mdi:search"
-              width="24"
-              height="24"
-              style="color: white"
-            />
+            <Icon icon="mdi:search" width="24" height="24" style="color: white" />
             <div class="w10"></div>
           </div>
           <div class="fill"></div>
-          <Icon
-            icon="mdi:settings"
-            width="24"
-            height="24"
-            style="color: white"
-          />
+          <Icon icon="mdi:settings" width="24" height="24" style="color: white" />
           <div class="w20"></div>
-          <Icon
-            icon="mdi:download"
-            width="24"
-            height="24"
-            style="color: white"
-          />
+          <Icon icon="mdi:download" width="24" height="24" style="color: white" />
           <div class="w20"></div>
           <Icon icon="mdi:bell" width="24" height="24" style="color: white" />
           <div class="w20"></div>
           <div style="color: white; font-size: 20px">Hinjin</div>
           <div class="w10"></div>
-          <div
-            style="
+          <div style="
               border-radius: 50px;
               height: 40px;
               width: 40px;
               background-color: white;
-            "
-          ></div>
+            "></div>
           <div class="w20"></div>
-        </div></div
-    ></el-header>
+        </div>
+      </div>
+    </div>
 
-    <el-main
-      style="height: 100%; width: 100%; overflow: hidden; padding: 0; margin: 0"
-      ><div class="myRow" style="height: 100%; width: 100%">
-        <el-aside style="width: 200px; height: 100%"
-          ><div
-            class="myCol"
-            style="height: 100%; width: 200px; align-items: center"
-          >
-            <div
-              class="menuCard myRow"
-              @click="onMenuClick(0)"
-              :class="{ menuCardSelect: selectIndex == 0 }"
-            >
+    <div style="height: 92%; width: 100%; overflow: hidden; padding: 0; margin: 0">
+      <div class="myRow" style="height: 100%; width: 100%">
+        <el-aside style="width: 200px; height: 100%">
+          <div class="myCol" style="height: 100%; width: 200px; align-items: center">
+            <div class="menuCard myRow" @click="onMenuClick(0)" :class="{ menuCardSelect: selectIndex == 0 }">
               <div class="w10"></div>
-              <Icon
-                icon="mdi:home"
-                width="30"
-                height="30"
-                style="color: white"
-              />
+              <Icon icon="mdi:home" width="30" height="30" style="color: white" />
               <div class="w10"></div>
               <div class="menuText">首页</div>
             </div>
-            <div
-              class="menuCard myRow"
-              @click="onMenuClick(1)"
-              :class="{ menuCardSelect: selectIndex == 1 }"
-            >
+            <div class="menuCard myRow" @click="onMenuClick(1)" :class="{ menuCardSelect: selectIndex == 1 }">
               <div class="w10"></div>
-              <Icon
-                icon="mdi:file-document"
-                width="30"
-                height="30"
-                style="color: white"
-              />
+              <Icon icon="mdi:file-document" width="30" height="30" style="color: white" />
               <div class="w10"></div>
               <div class="menuText">教学大纲</div>
             </div>
-            <div
-              class="menuCard myRow"
-              @click="onMenuClick(2)"
-              :class="{ menuCardSelect: selectIndex == 2 }"
-            >
+            <div class="menuCard myRow" @click="onMenuClick(2)" :class="{ menuCardSelect: selectIndex == 2 }">
               <div class="w10"></div>
-              <Icon
-                icon="mdi:insert-photo"
-                width="30"
-                height="30"
-                style="color: white"
-              />
+              <Icon icon="mdi:insert-photo" width="30" height="30" style="color: white" />
               <div class="w10"></div>
               <div class="menuText">教案</div>
             </div>
-            <div
-              class="menuCard myRow"
-              @click="onMenuClick(3)"
-              :class="{
-                menuCardSelect:
-                  (selectIndex == 3 ||
-                    selectIndex == 3.1 ||
-                    selectIndex == 3.2) &&
-                  isSubMenuVisible == false,
-              }"
-            >
+            <div class="menuCard myRow" @click="onMenuClick(3)" :class="{
+              menuCardSelect:
+                (selectIndex == 3 ||
+                  selectIndex == 3.1 ||
+                  selectIndex == 3.2) &&
+                isSubMenuVisible == false,
+            }">
               <div class="w10"></div>
-              <Icon
-                icon="mdi:pencil-box"
-                width="30"
-                height="30"
-                style="color: white"
-              />
+              <Icon icon="mdi:pencil-box" width="30" height="30" style="color: white" />
               <div class="w10"></div>
               <div class="menuText">备课</div>
               <div class="fill"></div>
-              <Icon
-                icon="mdi:chevron-down"
-                width="25"
-                height="25"
-                style="color: white"
-                class="rotate180"
-                :class="{ 'rotate-active': isSubMenuVisible }"
-              />
+              <Icon icon="mdi:chevron-down" width="25" height="25" style="color: white" class="rotate180"
+                :class="{ 'rotate-active': isSubMenuVisible }" />
               <div class="w10"></div>
             </div>
             <transition name="slide">
               <div v-if="isSubMenuVisible" class="subMenu">
-                <div
-                  class="menuCard myRow"
-                  @click="onMenuClick(3.1)"
-                  :class="{ menuCardSelect: selectIndex == 3.1 }"
-                >
+                <div class="menuCard myRow" @click="onMenuClick(3.1)" :class="{ menuCardSelect: selectIndex == 3.1 }">
                   <div class="w20"></div>
                   <div class="w20"></div>
-                  <Icon
-                    icon="mdi:chat-processing"
-                    width="20"
-                    height="20"
-                    style="color: white"
-                  />
+                  <Icon icon="mdi:chat-processing" width="20" height="20" style="color: white" />
                   <div class="w10"></div>
 
                   <div class="menuText">备课文档</div>
                 </div>
-                <div
-                  class="menuCard myRow"
-                  @click="onMenuClick(3.2)"
-                  :class="{ menuCardSelect: selectIndex == 3.2 }"
-                >
+                <div class="menuCard myRow" @click="onMenuClick(3.2)" :class="{ menuCardSelect: selectIndex == 3.2 }">
                   <div class="w20"></div>
                   <div class="w20"></div>
-                  <Icon
-                    icon="mdi:chat-processing"
-                    width="20"
-                    height="20"
-                    style="color: white"
-                  />
+                  <Icon icon="mdi:chat-processing" width="20" height="20" style="color: white" />
                   <div class="w10"></div>
 
                   <div class="menuText">备课PPt</div>
@@ -174,42 +94,32 @@
             </transition>
             <div class="menuCard myRow">
               <div class="w10"></div>
-              <Icon
-                icon="mdi:chat-processing"
-                width="30"
-                height="30"
-                style="color: white"
-              />
+              <Icon icon="mdi:chat-processing" width="30" height="30" style="color: white" />
               <div class="w10"></div>
               <div class="menuText">练习管理</div>
             </div>
             <div class="menuCard myRow">
               <div class="w10"></div>
-              <Icon
-                icon="mdi:chart-pie"
-                width="30"
-                height="30"
-                style="color: white"
-              />
+              <Icon icon="mdi:chart-pie" width="30" height="30" style="color: white" />
               <div class="w10"></div>
               <div class="menuText">学情分析</div>
             </div>
-          </div></el-aside
-        >
-        <el-main
-          style="
+          </div>
+        </el-aside>
+        <el-main style="
             height: 100%;
             width: 100%;
             margin: 0;
             padding: 0;
             margin-right: 20px;
-          "
-          ><div class="main">
+          ">
+          <div class="main">
             <router-view></router-view>
           </div>
           <div class="w20"></div>
-        </el-main></div
-    ></el-main>
+        </el-main>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
