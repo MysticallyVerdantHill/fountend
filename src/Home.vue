@@ -1,29 +1,31 @@
 <template>
     <!-- 顶部以及左侧导航栏-->
-    <div class="myCol" style="height: 100%">
-        <div style="height: 8%; width: 100%; margin: 0; padding: 0">
-            <div class="head myRow">
-                <div class="myRow" style="width: 200px; color: white; font-size: 30px; justify-content: center;">教学实训</div>
-                <div class="myRow" style="flex-grow: 1">
-                    <div class="searchBox myRow">
-                        <Icon icon="mdi:search" width="24" height="24" style="color: white; padding-left:20px" />
-                    </div>
-                    <div class="myRow" style="justify-content: flex-end; width: auto; gap: 20px;">
-                        <Icon icon="mdi:settings" width="24" height="24" style="color: white;" />
-                        <Icon icon="mdi:download" width="24" height="24" style="color: white;" />
-                        <Icon icon="mdi:bell" width="24" height="24" style="color: white;" />
-                        <div style="color: white; font-size: 20px;">Hinjin</div>
-                        <div style="border-radius: 50px; height: 40px; width: 40px; background-color: white;"></div>
-                    </div>
+    <div class="myCol" style="height: 100vh;">
+        <div class="header-container myRow">
+            <div class="myRow" style="min-width: 200px; justify-content: center; gap: 4px;">
+                <img src="/ico.png" alt="Logo" style="height: 40px; width: auto;" />
+                <div style="color: white; font-size: 20px; font-family: Source Han Serif SC;">教学实训</div>
+            </div>
+            <div class="myRow" style="flex-grow: 1">
+                <div class="searchBox myRow">
+                    <Icon icon="mdi:search" width="24" height="24" style="color: white; padding-left:10px" />
+                </div>
+                <div class="myRow" style="justify-content: flex-end; flex-grow: 1; gap: 20px; padding-right: 20px;">
+                    <Icon icon="mdi:settings" class="headIcon" />
+                    <Icon icon="mdi:download" class="headIcon" />
+                    <Icon icon="mdi:bell" width="24" height="24" style="color: white;" />
+                    <div style="color: white; font-size: 20px;">Hinjin</div>
+                    <div style="border-radius: 50px; height: 35px; width: 35px; background-color: white;"></div>
                 </div>
             </div>
         </div>
 
-        <div style="height: 92%; width: 100%; overflow: hidden; padding: 0; margin: 0">
+        <div class="main-container">
             <div class="myRow" style="height: 100%; width: 100%">
                 <el-aside style="width: 200px; height: 100%">
                     <div class="myCol" style="height: 100%; width: 200px; align-items: center">
-                        <div class="menuCard myRow" @click="onMenuClick(0)" :class="{ menuCardSelect: selectIndex == 0 }">
+                        <div class="menuCard myRow" @click="onMenuClick(0)" 
+                        :class="{ menuCardSelect: selectIndex == 0 }">
                             <div class="w10"></div>
                             <Icon icon="mdi:home" width="30" height="30" style="color: white" />
                             <div class="w10"></div>
